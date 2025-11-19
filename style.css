@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 10px;
     font-family: Arial, Helvetica, sans-serif;
+    min-width: 400px;
 }
 
 
@@ -19,4 +20,18 @@ button {
     font-weight: bold;
     padding: 10px 20px;
     border: none;
+}
+
+ul {
+   list-style: none;
+   padding-left: 0;
+   margin-top: 30px;
+}
+
+li {
+    margin-top: 8px;
+}
+
+li a {
+    color: #e6b474;
 }
