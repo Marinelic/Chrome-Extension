@@ -1,23 +1,22 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js"
 import { getDatabase, 
          ref,
-         push } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js"
+         push,
+         onValue,
+         remove } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js"
 
 const firebaseConfig = {
     databaseURL: "https://leads-tracker-app-8334f-default-rtdb.europe-west1.firebasedatabase.app/"
 }
 
- const app = initializeApp(firebaseConfig);
- const database = getDatabase(app)
- const referenceInDB = ref(database, "leads")
-
- console.log(firebaseConfig)
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app)
+const referenceInDB = ref(database, "leads")
 
 const inputEl = document.getElementById("input-el")
 const inputBtn = document.getElementById("input-btn")
 const ulEl = document.getElementById("ul-el")
 const deleteBtn = document.getElementById("delete-btn")
-
 
         function render(leads) {
             let listItems = ""
@@ -34,16 +33,26 @@ const deleteBtn = document.getElementById("delete-btn")
                 ulEl.innerHTML = listItems
             }
 
-
-        deleteBtn.addEventListener("dblclick", function() {
+        onValue(referenceInDB, function(snapshot) {
+            const snapshotDoesExist = snapshot.exists()
+                if (snapshotDoesExist) {
+                    const snapshotValues = snapshot.val()
+                    const leads = Object.values(snapshotValues)
+                    render(leads)
+                }
+            })
+            
         
-        })
+            deleteBtn.addEventListener("dblclick", function() {
+                remove(referenceInDB)
+                ulEl.innerHTML = ""
+            })
 
 
-        inputBtn.addEventListener("click", function() {
-            push(referenceInDB, inputEl.value)
-            inputEl.value = ""
-        })
+            inputBtn.addEventListener("click", function() {
+                push(referenceInDB, inputEl.value)
+                inputEl.value = ""
+            })
 
 
     
