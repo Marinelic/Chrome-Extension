@@ -24,13 +24,9 @@ button {
 }
 
 #delete-btn {
-    background: white;
-    color: #e6b474;
-}
-
-#tab-btn {
     background: #bccf87;
 }
+
 
 ul {
    list-style: none;
